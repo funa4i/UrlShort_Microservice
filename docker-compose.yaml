@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_MULTIPLE_DATABASES: "url,userAuth,userData,permissions"
+      PGDATA: "/var/lib/postgresqlm/data/pgdata"
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
+      - urlShortener-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    ports:
+      - "5430:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 4G
+    networks:
+      - postgres
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:8.12
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "someMail@ex.com"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin-data:/var/lib/pgadminm
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      - postgres
+
+volumes:
+  urlShortener-data:
+  pgadmin-data:
+
+networks:
+  postgres:
+    driver: bridge
