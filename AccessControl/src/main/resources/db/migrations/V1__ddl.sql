@@ -16,20 +16,20 @@ ALTER TABLE users
     ADD CONSTRAINT fk_users_role    FOREIGN KEY(role_id) REFERENCES role(id);
 
 
-CREATE TABLE paths(
+CREATE TABLE path(
     id      BIGSERIAL,
-    name    varchar(1000)       NOT NULL,
+    name    varchar(1000)       NOT NULL
 );
 
-ALTER TABLE paths
-    ADD CONSTRAINT pk_paths PRIMARY KEY(id);
+ALTER TABLE path
+    ADD CONSTRAINT pk_path PRIMARY KEY(id);
 
-CREATE TABLE paths_role(
+CREATE TABLE path_role(
     path_id BIGINT,
     role_id BIGINT
 );
 
-ALTER TABLE paths_role
-    ADD CONSTRAINT pk_paths_role PRIMARY KEY (paths_role, role_id);
+ALTER TABLE path_role
+    ADD CONSTRAINT pk_path_role PRIMARY KEY (path_id, role_id);
 
 
