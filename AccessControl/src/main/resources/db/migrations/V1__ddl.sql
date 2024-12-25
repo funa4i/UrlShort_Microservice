@@ -30,6 +30,8 @@ CREATE TABLE path_role(
 );
 
 ALTER TABLE path_role
-    ADD CONSTRAINT pk_path_role PRIMARY KEY (path_id, role_id);
+    ADD CONSTRAINT  pk_path_role    PRIMARY KEY(path_id, role_id),
+    ADD CONSTRAINT  fk_path         FOREIGN KEY(path_id)                REFERENCES path(id),
+    ADD CONSTRAINT  fk_role         FOREIGN KEY(role_id)                REFERENCES role(id);
 
 
