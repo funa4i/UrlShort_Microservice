@@ -33,12 +33,16 @@ public class AclController {
     public void addRoleForPath(@RequestParam(name = "path") String path,
                                 @PathVariable String role){
         aclServ.addRoleForPath(path, role);
+    }
 
+    @PutMapping("/path")
+    public void addPath(@RequestParam(name="path") String path){
+        aclServ.createPath(path);
     }
 
     @GetMapping("/permission/{id}")
     public Map<String, Boolean> accessCheck(@RequestParam(name = "path") String path,
-                               @PathVariable Long id){
+                                            @PathVariable Long id){
         var ret = new HashMap<String, Boolean>();
         ret.put("access", aclServ.accessCheck(path, id));
         return ret;

@@ -9,4 +9,5 @@ public interface PathRepository extends JpaRepository<Path, Long> {
 
     Optional<Path> findByName(String name);
 
+    Boolean existsByName(String name);
 }

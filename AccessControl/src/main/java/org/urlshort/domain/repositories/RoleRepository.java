@@ -11,8 +11,8 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
     Optional<Role> findByName(String name);
 
-    @Query("SELECT r FROM Role r JOIN FETCH r.paths WHERE r.id = :roleId")
-    Role findRoleWithPaths(@Param("roleId") Long roleId);
+
+    Boolean existsByName(String name);
 
 
 

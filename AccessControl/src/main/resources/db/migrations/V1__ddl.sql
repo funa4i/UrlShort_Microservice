@@ -4,7 +4,8 @@ CREATE TABLE role(
 );
 
 ALTER TABLE role
-    ADD CONSTRAINT  pk_role  PRIMARY KEY(id);
+    ADD CONSTRAINT  pk_role         PRIMARY KEY(id),
+    ADD CONSTRAINT  un_name_role    UNIQUE(name);
 
 CREATE TABLE users(
     id          BIGINT,
@@ -22,7 +23,8 @@ CREATE TABLE path(
 );
 
 ALTER TABLE path
-    ADD CONSTRAINT pk_path PRIMARY KEY(id);
+    ADD CONSTRAINT pk_path          PRIMARY KEY(id),
+    ADD CONSTRAINT un_name_path     UNIQUE(name);
 
 CREATE TABLE path_role(
     path_id BIGINT,

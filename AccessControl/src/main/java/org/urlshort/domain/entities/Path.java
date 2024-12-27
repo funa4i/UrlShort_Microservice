@@ -23,11 +23,10 @@ public class Path {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "paths",cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @ManyToMany(mappedBy = "paths",fetch = FetchType.LAZY)
+    private List<Role> roles;
 
     public Path(String path){
         name = path;
     }
-
 }
