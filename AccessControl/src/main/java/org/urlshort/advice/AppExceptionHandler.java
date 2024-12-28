@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.urlshort.domain.enums.ExceptionAnswer;
+import org.urlshort.advice.enums.ExceptionAnswer;
 import org.urlshort.exceptions.NullObjectException;
 
 
@@ -23,6 +23,8 @@ public class AppExceptionHandler {
         if (ex instanceof NullObjectException){
             exc = new ExceptionView(ExceptionAnswer.REQUIRED_OBJECT_NOT_FOUND);
         }
+        assert exc != null;
+        exc.setMessage(ex.getMessage());
 
         return ResponseEntity
                 .status(404)

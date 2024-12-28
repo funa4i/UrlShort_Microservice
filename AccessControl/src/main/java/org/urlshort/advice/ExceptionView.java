@@ -1,7 +1,7 @@
 package org.urlshort.advice;
 
 import lombok.Data;
-import org.urlshort.domain.enums.ExceptionAnswer;
+import org.urlshort.advice.enums.ExceptionAnswer;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +12,8 @@ public class ExceptionView {
     private ExceptionAnswer exception;
 
     private LocalDateTime timestamp;
+
+    private String message;
 
     public ExceptionView(ExceptionAnswer exception) {
         this.exception = exception;

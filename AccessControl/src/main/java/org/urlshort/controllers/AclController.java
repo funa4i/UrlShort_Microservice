@@ -1,10 +1,10 @@
 package org.urlshort.controllers;
 
 
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.urlshort.domain.data.AccessCheckAnswer;
+import org.urlshort.domain.data.RoleRequest;
 import org.urlshort.services.AclService;
 
 import java.util.HashMap;
@@ -24,9 +24,9 @@ public class AclController {
 
     @PutMapping("/user/{id}/role")
     public void setUserRole(@PathVariable Long id,
-                            @RequestBody Map<String, String> role)
+                            @RequestBody RoleRequest role)
     {
-        aclServ.setUserRole(id, role.get("role"));
+        aclServ.setUserRole(id, role.getRole());
     }
 
     @PostMapping("/permissions/{role}")
@@ -41,11 +41,10 @@ public class AclController {
     }
 
     @GetMapping("/permission/{id}")
-    public Map<String, Boolean> accessCheck(@RequestParam(name = "path") String path,
+    public AccessCheckAnswer accessCheck(@RequestParam(name = "path") String path,
                                             @PathVariable Long id){
-        var ret = new HashMap<String, Boolean>();
-        ret.put("access", aclServ.accessCheck(path, id));
-        return ret;
+
+        return new AccessCheckAnswer(aclServ.accessCheck(path, id));
     }
 
     @PutMapping("/permissions/{role}")
