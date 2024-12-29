@@ -1,15 +1,17 @@
-package org.urlshort.entities;
+package org.urlshort.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class UserAuth {
+@Table(name="user_authentication")
+public class User{
 
     @Id
     @Setter(AccessLevel.PRIVATE)
