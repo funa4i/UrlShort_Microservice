@@ -13,21 +13,21 @@ import org.urlshort.exceptions.NullObjectException;
 @RestControllerAdvice
 public class AppExceptionHandler {
 
-    @ExceptionHandler({ConstraintViolationException.class, NullObjectException.class})
-    public  ResponseEntity<ExceptionView> notExistHandler(Exception ex){
-        ExceptionView exc = null;
-        log.warn(ex.getMessage());
-        if (ex instanceof ConstraintViolationException){
-            exc = new ExceptionView(ExceptionAnswer.INVALID_DATA_FORMAT);
-        }
-        if (ex instanceof NullObjectException){
-            exc = new ExceptionView(ExceptionAnswer.REQUIRED_OBJECT_NOT_FOUND);
-        }
-        assert exc != null;
+    @ExceptionHandler({NullObjectException.class})
+    public ResponseEntity<ExceptionView> notExistHandler(Exception ex){
+        ExceptionView exc = new ExceptionView(ExceptionAnswer.REQUIRED_OBJECT_NOT_FOUND);
         exc.setMessage(ex.getMessage());
-
         return ResponseEntity
                 .status(404)
+                .body(exc);
+    }
+
+    @ExceptionHandler({ConstraintViolationException.class})
+    public ResponseEntity<ExceptionView> badValidation(Exception ex){
+        ExceptionView exc = new ExceptionView(ExceptionAnswer.INVALID_DATA_FORMAT);
+        exc.setMessage(ex.getMessage());
+        return ResponseEntity
+                .status(400)
                 .body(exc);
     }
 }
