@@ -1,14 +1,20 @@
 package org.urlshort.domain;
 
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.urlshort.controllers.Feign.AccessControlApi;
-import org.urlshort.controllers.Feign.data.RoleRequest;
+import org.urlshort.domain.entities.User;
+import org.urlshort.exceptions.*;
+import org.urlshort.feign.clients.AccessControlApi;
+import org.urlshort.feign.clients.UserApplicationApi;
+import org.urlshort.feign.data.RoleRequest;
 import org.urlshort.domain.data.CreateUserRequest;
 import org.urlshort.domain.repostories.UserAuthRepository;
+import org.urlshort.feign.data.UserCreateRequest;
 import org.urlshort.mappers.UserMapper;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -18,21 +24,37 @@ public class AuthModel {
 
     private final AccessControlApi accessControl;
 
+    private final UserApplicationApi userApplication;
+
     private final UserMapper userMapper;
 
     @Transactional
-    public void createNewUser(CreateUserRequest user, String role){
+    public User createNewUser(CreateUserRequest user){
         var newUser = userMapper.toUser(user);
+        if (userRep.existsByLogin(newUser.getLogin())){
+            throw new AlreadyExistsException(User.class, newUser.getLogin());
+        }
+        newUser.setRegisterDate(LocalDateTime.now());
         userRep.save(newUser);
         try {
-            accessControl.setUserRole(newUser.getId(), new RoleRequest(role));
-            //TODO: После реализации UserService допилить создание
+            accessControl.setUserRole(newUser.getId(), new RoleRequest(user.getRole()));
+            userApplication.createUser(
+                    new UserCreateRequest(newUser.getId(), user.getEmail())
+            );
         }
-        catch (FeignException ex){
+        catch (NotFoundException|
+               BadRequestException|
+               UncheckedException ex){
+            userApplication.revertCreateUser(newUser.getId());
+            accessControl.revertCreateUser(newUser.getId());
             userRep.deleteById(newUser.getId());
             throw ex;
         }
+        return newUser;
     }
 
-
+    @Transactional
+    public Optional<User> getUser(String login){
+        return userRep.findByLogin(login);
+    }
 }

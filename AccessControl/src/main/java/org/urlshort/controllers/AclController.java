@@ -35,6 +35,11 @@ public class AclController {
         aclServ.addRoleForPath(path, role);
     }
 
+    @DeleteMapping("user/{id}")
+    public void revertUserCreate(@PathVariable Long id){
+        aclServ.deleteUser(id);
+    }
+
     @PutMapping("/path")
     public void addPath(@RequestParam(name="path") String path){
         aclServ.createPath(path);

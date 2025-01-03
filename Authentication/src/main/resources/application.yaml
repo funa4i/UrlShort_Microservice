@@ -11,11 +11,15 @@ spring:
     password: password
     locations: classpath:db/migrations
     enabled: true
-
+  jwt:
+    secret: SomeSecretKeySomeSecretKeySomeSecretKeySomeSecretKeySomeSecretKey
+    duration: 30m
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+
 
 server:
   port: 0

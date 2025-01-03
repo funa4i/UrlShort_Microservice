@@ -28,8 +28,16 @@ public class UserModel {
         if (userRep.existsById(userId)){
             throw new AlreadyExistsException(User.class, userId.toString());
         }
+        if (userRep.existsByEmail(email)){
+            throw new AlreadyExistsException(User.class, email);
+        }
         var user = new User(userId, email, defaultLinksPerDay, defaultLinksPerDay, LocalDateTime.now());
         userRep.save(user);
+    }
+
+    @Transactional
+    public void deleteUserById(Long id){
+        userRep.deleteById(id);
     }
 
     @Transactional

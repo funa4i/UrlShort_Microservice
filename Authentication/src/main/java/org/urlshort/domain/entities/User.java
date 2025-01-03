@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +14,7 @@ public class User{
 
     @Id
     @Setter(AccessLevel.PRIVATE)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "login", nullable = false)
@@ -24,7 +23,7 @@ public class User{
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "registerDate", nullable = false)
+    @Column(name = "registerdate", nullable = false)
     private LocalDateTime registerDate;
 
 }

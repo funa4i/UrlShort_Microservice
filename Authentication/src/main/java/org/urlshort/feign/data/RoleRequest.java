@@ -1,4 +1,4 @@
-package org.urlshort.controllers.Feign.data;
+package org.urlshort.feign.data;
 
 
 import jakarta.validation.constraints.NotBlank;

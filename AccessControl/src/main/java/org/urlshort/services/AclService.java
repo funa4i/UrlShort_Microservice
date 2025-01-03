@@ -31,4 +31,8 @@ public class AclService {
    public void createPath(@NotBlank String path){
        aclModel.createPath(path);
    }
+
+   public void deleteUser(@Min(1) @NotBlank Long id){
+       aclModel.deleteUser(id);
+   }
 }

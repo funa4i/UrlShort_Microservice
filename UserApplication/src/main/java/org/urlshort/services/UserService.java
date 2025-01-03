@@ -35,6 +35,10 @@ public class UserService {
         );
     }
 
+    public void deleteUser(@Min(1) @NotNull Long id){
+        userModel.deleteUserById(id);
+    }
+
     public Page<UserInfo> getUsers(@NotNull @Min(0) Integer page,
                                    @NotNull @Min(1) Integer limits){
         return userModel.getAllUsers(page, limits)

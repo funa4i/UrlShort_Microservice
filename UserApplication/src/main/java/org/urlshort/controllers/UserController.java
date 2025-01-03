@@ -43,5 +43,11 @@ public class UserController {
         userServ.setUserLinks(id, linksCount);
     }
 
+    @DeleteMapping("/user/{id}")
+    public void revertCreateUser(@PathVariable Long id)
+    {
+        userServ.deleteUser(id);
+    }
+
 
 }

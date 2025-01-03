@@ -11,7 +11,7 @@ import org.urlshort.domain.repositories.PathRepository;
 import org.urlshort.domain.repositories.RoleRepository;
 import org.urlshort.domain.repositories.UserRepository;
 import org.urlshort.exceptions.NullObjectException;
-import org.urlshort.exceptions.ObjectAlreadyExists;
+import org.urlshort.exceptions.AlreadyExistsException;
 
 
 @Component
@@ -33,6 +33,11 @@ public class AclModel {
     }
 
     @Transactional
+    public void deleteUser(Long id){
+        userRep.deleteById(id);
+    }
+
+    @Transactional
     public void addRoleForPath(String path, String role){
         var newRole = roleRep.findByName(role).orElseThrow(() -> new NullObjectException(Role.class, role));
         var newPath = pathRep.findByName(path).orElse(new Path(path));
@@ -47,7 +52,7 @@ public class AclModel {
             pathRep.save(new Path(path));
             return;
         }
-        throw new ObjectAlreadyExists(Path.class, path);
+        throw new AlreadyExistsException(Path.class, path);
     }
 
     @Transactional
@@ -70,6 +75,6 @@ public class AclModel {
             roleRep.save(new Role(role));
             return;
         }
-        throw new ObjectAlreadyExists(Role.class, role);
+        throw new AlreadyExistsException(Role.class, role);
     }
 }
