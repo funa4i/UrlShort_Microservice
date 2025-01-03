@@ -14,6 +14,8 @@
     <module>Authentication</module>
     <module>EurekaServer</module>
     <module>Gateway</module>
+      <module>UserApplication</module>
+    <module>UrlShortService</module>
   </modules>
 
   <properties>
