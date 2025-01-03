@@ -28,7 +28,7 @@ public class UserModel {
         if (userRep.existsById(userId)){
             throw new AlreadyExistsException(User.class, userId.toString());
         }
-        var user = new User(userId, email, defaultLinksPerDay, defaultLinksPerDay, null);
+        var user = new User(userId, email, defaultLinksPerDay, defaultLinksPerDay, LocalDateTime.now());
         userRep.save(user);
     }
 
@@ -51,7 +51,7 @@ public class UserModel {
     @Transactional
     public User getUserByMail(String email){
         return userRep.findByEmail(email)
-                .orElseThrow(() -> new NullObjectException(User.class, email)); // TODO: Сделать кастом ошибку
+                .orElseThrow(() -> new NullObjectException(User.class, email));
     }
 
     @Transactional

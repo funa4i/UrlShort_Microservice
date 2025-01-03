@@ -35,7 +35,7 @@ public class UserService {
         );
     }
 
-    public Page<UserInfo> getUsers(@NotNull @Min(1) Integer page,
+    public Page<UserInfo> getUsers(@NotNull @Min(0) Integer page,
                                    @NotNull @Min(1) Integer limits){
         return userModel.getAllUsers(page, limits)
                 .map(userMapper::toUserInfo);

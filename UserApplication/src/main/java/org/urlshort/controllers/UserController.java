@@ -30,10 +30,10 @@ public class UserController {
         return userServ.userByEmail(mailRequest);
     }
     @GetMapping("/users")
-    public Page<UserInfo> allUsers(@RequestParam Integer path,
+    public Page<UserInfo> allUsers(@RequestParam Integer page,
                                    @RequestParam Integer limits)
     {
-        return userServ.getUsers(path, limits);
+        return userServ.getUsers(page, limits);
     }
 
     @PostMapping("/user/{id}/linksPerDay")
