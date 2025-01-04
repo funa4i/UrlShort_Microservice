@@ -42,9 +42,9 @@ public class AuthModel {
                     new UserCreateRequest(newUser.getId(), user.getEmail())
             );
         }
-        catch (NotFoundException|
-               BadRequestException|
-               UncheckedException ex){
+        catch (NotFoundException |
+                NullObjectException |
+                UncheckedException ex){
             userApplication.revertCreateUser(newUser.getId());
             accessControl.revertCreateUser(newUser.getId());
             userRep.deleteById(newUser.getId());
