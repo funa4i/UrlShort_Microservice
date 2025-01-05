@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: Auth-server
+  datasource:
+    url: jdbc:postgresql://localhost:5430/
+    username: root
+    password: password
+  flyway:
+    url: jdbc:postgresql://localhost:5430/
+    user: root
+    password: password
+    locations: classpath:db/migrations
+    enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+app:
+  default:
+    linkDurationDays: 10
+
+server:
+  port: 0
+
+
+
