@@ -9,6 +9,5 @@ import org.urlshort.domain.data.DecreaseResultAnswer;
 public interface UserApplicationApi {
 
     @PostMapping("/user/{id}/linksPerDay/decrement")
-    public DecreaseResultAnswer decreaseUserLinks(@PathVariable Long id);
-
+    DecreaseResultAnswer decreaseUserLinks(@PathVariable Long id);
 }

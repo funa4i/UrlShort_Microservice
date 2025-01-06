@@ -5,9 +5,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.urlshort.domain.data.CreateUserRequest;
-import org.urlshort.domain.data.UserValid;
 import org.urlshort.domain.entities.User;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {

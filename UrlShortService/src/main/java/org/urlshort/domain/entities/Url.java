@@ -24,16 +24,16 @@ public class Url {
     private String shortUrl;
 
     @Column(name = "full_url ")
-    private Integer fullUrl;
+    private String fullUrl;
 
     @Column(name = "iterations")
-    private String iterations;
+    private Long iterations;
 
     @CreationTimestamp
     @Column(name = "valid_until")
     private LocalDateTime validUntil;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

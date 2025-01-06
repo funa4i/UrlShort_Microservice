@@ -1,12 +1,12 @@
 spring:
   application:
-    name: Auth-server
+    name: url-serv
   datasource:
-    url: jdbc:postgresql://localhost:5430/
+    url: jdbc:postgresql://localhost:5430/url
     username: root
     password: password
   flyway:
-    url: jdbc:postgresql://localhost:5430/
+    url: jdbc:postgresql://localhost:5430/url
     user: root
     password: password
     locations: classpath:db/migrations
@@ -19,6 +19,7 @@ eureka:
 app:
   default:
     linkDurationDays: 10
+    defaultLinkPath: localhost/
 
 server:
   port: 0

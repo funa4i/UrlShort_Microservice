@@ -27,5 +27,11 @@ eureka:
 server:
   port: 0
 
+role:
+  defaultRole: user
+  roles: admin ban god
+
+
+
 
 

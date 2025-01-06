@@ -13,7 +13,7 @@ public class ShortUrUtil {
         var sr = new SecureRandom();
         StringBuilder newUrl = new StringBuilder();
         for (int i = 0; i < 7; i++) {
-            newUrl.append(alphabet.charAt(sr.nextInt(alphabet.length() + 1)));
+            newUrl.append(alphabet.charAt(sr.nextInt(alphabet.length())));
         }
         return newUrl.toString();
     }
