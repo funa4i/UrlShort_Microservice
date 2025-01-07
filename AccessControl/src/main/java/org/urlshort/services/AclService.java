@@ -2,6 +2,7 @@ package org.urlshort.services;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.urlshort.domain.AclModel;
@@ -34,5 +35,9 @@ public class AclService {
 
    public void deleteUser(@Min(1) @NotBlank Long id){
        aclModel.deleteUser(id);
+   }
+
+   public void createUser(@Min(1) @NotNull Long id){
+       aclModel.createUser(id);
    }
 }

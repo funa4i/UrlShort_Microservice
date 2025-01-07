@@ -17,16 +17,16 @@ public class AclController {
 
     private final AclService aclServ;
 
-    @GetMapping
-    public String v(){
-        return "HelloWorld";
-    }
-
-    @PutMapping("/user/{id}/role")
+    @PostMapping("/user/{id}/role")
     public void setUserRole(@PathVariable Long id,
                             @RequestBody RoleRequest role)
     {
         aclServ.setUserRole(id, role.getRole());
+    }
+
+    @PutMapping("/user/{id}")
+    public void createUser(@PathVariable Long id){
+        aclServ.createUser(id);
     }
 
     @PostMapping("/permissions/{role}")

@@ -2,6 +2,7 @@ package org.urlshort.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.urlshort.domain.entities.Path;
@@ -25,11 +26,23 @@ public class AclModel {
 
     private final RoleRepository roleRep;
 
+    @Value("${role.default}")
+    private String defaultRole;
+
+    @Transactional
+    public void createUser(Long id){
+        if (userRep.existsById(id)){
+            throw new AlreadyExistsException(User.class, id.toString());
+        }
+        var rl = roleRep.findByName(defaultRole).orElseThrow( () ->new RuntimeException("Incorrect default role"));
+        userRep.save(new User(id, rl));
+    }
 
     @Transactional
     public void setUserRole(Long id, String role){
         var rl = roleRep.findByName(role).orElseThrow(() -> new NullObjectException(Role.class, role));
-        userRep.save(new User(id, rl));
+        var user = userRep.findById(id).orElseThrow(() -> new NullObjectException(User.class, id.toString()));
+        user.setRole(rl);
     }
 
     @Transactional
@@ -40,8 +53,12 @@ public class AclModel {
     @Transactional
     public void addRoleForPath(String path, String role){
         var newRole = roleRep.findByName(role).orElseThrow(() -> new NullObjectException(Role.class, role));
-        var newPath = pathRep.findByName(path).orElse(new Path(path));
-        pathRep.save(newPath);
+        var newPath = pathRep.findByName(path).orElseThrow(() -> new NullObjectException(Path.class, path));
+
+        if (newRole.getPaths().contains(newPath)){
+            return;
+        }
+
         newRole.getPaths().add(newPath);
         roleRep.save(newRole);
     }
@@ -50,9 +67,7 @@ public class AclModel {
     public void createPath(String path){
         if (!pathRep.existsByName(path)){
             pathRep.save(new Path(path));
-            return;
         }
-        throw new AlreadyExistsException(Path.class, path);
     }
 
     @Transactional

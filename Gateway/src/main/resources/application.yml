@@ -1,6 +1,8 @@
 spring:
   application:
     name: gateway-point
+  jwt:
+    secret: SomeSecretKeySomeSecretKeySomeSecretKeySomeSecretKeySomeSecretKey
 
 server:
   port: 8080
@@ -9,8 +11,5 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
-#springdoc:
-#  api-docs:
-#    path: /dock/api-docs
-#  swagger-ui:
-#    path: /dock/swagger-ui-custom.html
+app:
+  UrlPath: localhost/

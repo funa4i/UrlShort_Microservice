@@ -37,7 +37,7 @@ public class AuthModel {
         newUser.setRegisterDate(LocalDateTime.now());
         userRep.save(newUser);
         try {
-            accessControl.setUserRole(newUser.getId(), new RoleRequest(user.getRole()));
+            accessControl.createUser(newUser.getId());
             userApplication.createUser(
                     new UserCreateRequest(newUser.getId(), user.getEmail())
             );

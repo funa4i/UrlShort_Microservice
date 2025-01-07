@@ -33,12 +33,8 @@ public class UrlShortController {
     }
 
     @GetMapping("/{url}")
-    public ResponseEntity<String> getLong(@PathVariable("url") String shortUrl) throws JsonProcessingException {
-
-        var url = urlShortService.getUrl(shortUrl);
-
-        return ResponseEntity.status(303).header("Location", url).body("");
-
+    public String getLong(@PathVariable("url") String shortUrl) {
+        return urlShortService.getUrl(shortUrl);
     }
 
 

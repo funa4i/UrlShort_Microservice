@@ -18,7 +18,4 @@ public class CreateUserRequest {
 
     @NotBlank(message = "Password can't be empty")
     private String password;
-
-    @NotBlank
-    private String role;
 }

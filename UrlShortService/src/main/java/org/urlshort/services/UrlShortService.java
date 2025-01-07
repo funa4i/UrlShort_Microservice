@@ -22,11 +22,8 @@ public class UrlShortService {
 
     private final UrlMapper urlMapper;
 
-    @Value(value = "${app.default.defaultLinkPath}")
-    private String defaultPath;
-
     public String getUrl(@NotBlank String url){
-        return defaultPath + urlShortModel.getUrlByShort(url).getShortUrl();
+        return urlShortModel.getUrlByShort(url).getShortUrl();
     }
 
     public void deleteUrl(@Min(1) @NotNull Long id){
@@ -36,7 +33,7 @@ public class UrlShortService {
     public UrlView createUrl(@Valid UrlCreateRequest url){
 
         var newUrl = urlShortModel.createUrl(url, url.getUserid());
-        newUrl.setShortUrl(defaultPath + newUrl.getShortUrl());
+        newUrl.setShortUrl(newUrl.getShortUrl());
         return urlMapper.toUrlView(newUrl);
     }
 

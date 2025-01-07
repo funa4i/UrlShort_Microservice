@@ -16,11 +16,11 @@ public class RoleMigrate implements ApplicationListener<ApplicationReadyEvent> {
 
     private final RoleRepository roleRepository;
 
-    @Value("${role.defaultRole}")
-    private String defaultRole;
-
     @Value("#{'${role.roles}'.split(' ')}")
     private ArrayList<String> roles;
+
+    @Value("${role.default}")
+    private String defaultRole;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
