@@ -38,11 +38,16 @@ public class UrlShortModel {
 
     @Transactional
     public Url getUrlByShort(String shortUrl){
-        return urlRep
+        var url = urlRep
                 .findByShortUrl(shortUrl)
                 .orElseThrow(
                         () -> new NullObjectException(Url.class, shortUrl)
                 );
+        url.setIterations(url.getIterations() - 1);
+        if(url.getIterations() == 0){
+            urlRep.delete(url);
+        }
+        return url;
     }
 
     @Transactional
