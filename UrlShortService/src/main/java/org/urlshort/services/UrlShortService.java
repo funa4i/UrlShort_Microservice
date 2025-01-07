@@ -23,7 +23,7 @@ public class UrlShortService {
     private final UrlMapper urlMapper;
 
     public String getUrl(@NotBlank String url){
-        return urlShortModel.getUrlByShort(url).getShortUrl();
+        return urlShortModel.getUrlByShort(url).getFullUrl();
     }
 
     public void deleteUrl(@Min(1) @NotNull Long id){

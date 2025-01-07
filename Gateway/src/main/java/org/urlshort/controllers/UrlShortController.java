@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.urlshort.advice.enums.MethodType;
 import org.urlshort.domain.annotations.Auth;
@@ -37,6 +38,7 @@ public class UrlShortController {
     @Auth(methodType = MethodType.POST, path = "/url",
             requiredRole = {"user", "admin"})
     public UrlView createUrl(@RequestBody UrlCreateRequest url){
+        url.setUserid(Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName()));
         return urlShortService.createUrl(url);
     }
 

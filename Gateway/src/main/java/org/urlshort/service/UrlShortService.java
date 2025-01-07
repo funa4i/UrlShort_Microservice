@@ -19,11 +19,11 @@ public class UrlShortService {
 
     private final UrlShortApi urlShortApi;
 
-    @Value("${app.UrlPath")
+    @Value("${app.UrlPath}")
     private String urlPath;
 
     public String getUrl(@NotBlank String url){
-        return urlPath + urlShortApi.getLong(url);
+        return urlShortApi.getLong(url);
     }
 
     public void deleteUrl(@Min(1) @NotNull Long id){
