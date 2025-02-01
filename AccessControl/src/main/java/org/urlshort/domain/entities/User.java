@@ -11,13 +11,11 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class User {
 
     @Id
     private Long id;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(

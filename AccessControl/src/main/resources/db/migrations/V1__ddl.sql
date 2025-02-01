@@ -1,39 +1,30 @@
 CREATE TABLE role(
-    id      BIGSERIAL,
+    id      BIGSERIAL       PRIMARY KEY,
     name    varchar(255)    NOT NULL
 );
 ALTER TABLE role
-    ADD CONSTRAINT  pk_role         PRIMARY KEY(id),
     ADD CONSTRAINT  un_name_role    UNIQUE(name);
 
 
-
 CREATE TABLE users(
-    id          BIGINT
+    id      BIGINT  PRIMARY KEY
 );
-ALTER TABLE users
-    ADD CONSTRAINT pk_user     PRIMARY KEY(id);
-
 
 
 CREATE TABLE user_role(
-    user_id      BIGINT,
+    user_id      BIGINT PRIMARY KEY,
     role_id      BIGINT
 );
-
 ALTER TABLE user_role
-    ADD CONSTRAINT  pk_user_role    PRIMARY KEY(user_id),
     ADD CONSTRAINT  fk_user_role    FOREIGN KEY(role_id)    REFERENCES role(id),
     ADD CONSTRAINT  fk_user_user    FOREIGN KEY(user_id)    REFERENCES users(id) ON DELETE CASCADE;
 
 
-
 CREATE TABLE path(
-    id      BIGSERIAL,
-    name    varchar(1000)       NOT NULL
+    id      BIGSERIAL           PRIMARY KEY,
+    name    varchar(255)        NOT NULL     UNIQUE
 );
 ALTER TABLE path
-    ADD CONSTRAINT pk_path          PRIMARY KEY(id),
     ADD CONSTRAINT un_name_path     UNIQUE(name);
 
 
