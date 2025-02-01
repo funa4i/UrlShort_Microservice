@@ -1,6 +1,6 @@
 spring:
   application:
-    name: acl-server
+    name: accessControl-service
   datasource:
     url: jdbc:postgresql://localhost:5430/permissions
     username: root

@@ -22,25 +22,12 @@ public class UrlShortService {
     @Value("${app.UrlPath}")
     private String urlPath;
 
-    public String getUrl(@NotBlank String url){
-        return urlShortApi.getLong(url);
-    }
-
-    public void deleteUrl(@Min(1) @NotNull Long id){
-        urlShortApi.deleteUrl(id);
-    }
-
     public UrlView createUrl(@Valid UrlCreateRequest url){
         var view = urlShortApi.createUrl(url);
         view.setShortUrl(urlPath + view.getShortUrl());
         return view;
     }
 
-    public Page<UrlView> getUrls(
-            @Min(0) @NotNull Integer page,
-            @Min(1) @NotNull Integer limit){
-        return urlShortApi.getUrls(page, limit);
-    }
 
 }
 

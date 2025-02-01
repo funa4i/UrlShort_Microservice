@@ -31,7 +31,7 @@ public class AccessController {
         accessControlService.deleteUser(id);
     }
 
-    @GetMapping("/permissions/{UserId}")
+    @GetMapping("/permissions/{userId}")
     public AccessCheckAnswer accessCheck(@RequestParam(name = "path")   @NotBlank   String path,
                                          @PathVariable                  @Min(1)     Long UserId){
         return new AccessCheckAnswer(accessControlService.accessCheck(path, UserId));

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.urlshort.feign.data.UserCreateRequest;
 
-@FeignClient(name = "user-server")
+@FeignClient(name = "user-service")
 public interface UserApplicationApi {
 
     @PutMapping("/user")

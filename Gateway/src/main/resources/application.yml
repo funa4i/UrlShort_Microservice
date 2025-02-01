@@ -3,6 +3,38 @@ spring:
     name: gateway-point
   jwt:
     secret: SomeSecretKeySomeSecretKeySomeSecretKeySomeSecretKeySomeSecretKey
+  cloud:
+    gateway:
+      routes:
+      - id: accessControl-service
+        uri: lb://accessControl-service
+        predicates:
+          - Path=/users/{id}/roles
+          - Method=PATCH
+          - Path=/permissions/{userId}
+          - Method=GET
+      - id: authenticate-service
+        uri: lb://authenticate-service
+        predicates:
+          - Path=/sing-in
+          - Method=POST
+          - Path=/log-in
+          - Method=POST
+      - id: url-service
+        uri: lb://url-service
+        predicates:
+          - Path=/urls/**
+          - Method=GET,DELETE
+          - Path=/{url}
+          - Method=GET
+      - id: user-service
+        uri: lb://user-service
+        predicates:
+          -Path=/user
+          -Method=GET
+          -Path=/users/**
+          -Method=GET,POST
+
 
 server:
   port: 8080

@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.urlshort.domain.data.DecreaseResultAnswer;
 
-@FeignClient(name = "user-server")
+@FeignClient(name = "user-service")
 public interface UserApplicationApi {
 
     @PostMapping("/user/{id}/linksPerDay/decrement")

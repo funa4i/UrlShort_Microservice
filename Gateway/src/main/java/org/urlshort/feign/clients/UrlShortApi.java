@@ -7,18 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import org.urlshort.feign.data.UrlCreateRequest;
 import org.urlshort.feign.data.UrlView;
 
-@FeignClient(name = "url-serv")
+@FeignClient(name = "url-service")
 public interface UrlShortApi {
 
-    @GetMapping("/urls")
-    Page<UrlView> getUrls(@RequestParam Integer page, @RequestParam Integer limit);
-
-    @DeleteMapping("/url/{id}")
-    void deleteUrl(@PathVariable Long id);
-
-    @PostMapping("/url")
+    @PostMapping("/urls")
     UrlView createUrl(@RequestBody UrlCreateRequest url);
 
-    @GetMapping("/{url}")
-    String getLong(@PathVariable("url") String shortUrl);
 }

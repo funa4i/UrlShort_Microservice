@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.urlshort.feign.data.RoleRequest;
 
-@FeignClient(name = "acl-server")
+@FeignClient(name = "accessControl-service")
 public interface AccessControlApi {
 
     @PutMapping("/user/{id}")

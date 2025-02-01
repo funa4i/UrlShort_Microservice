@@ -20,6 +20,6 @@ public class UrlCreateRequest {
     @NotBlank
     private Long iterations;
 
-    @Min(1) @NotNull
+    @Min(1)
     private Long userid;
 }
