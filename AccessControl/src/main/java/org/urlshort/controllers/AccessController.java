@@ -14,7 +14,7 @@ import org.urlshort.services.AccessControlService;
 public class AccessController {
     private final AccessControlService accessControlService;
 
-    @PostMapping("/users/{id}/roles")
+    @PatchMapping("/users/{id}/roles")
     public void setUserRole(@PathVariable   @Min(1)     Long id,
                             @RequestBody    @NotBlank   RoleRequest role)
     {
@@ -31,7 +31,7 @@ public class AccessController {
         accessControlService.deleteUser(id);
     }
 
-    @GetMapping("/permission/{UserId}")
+    @GetMapping("/permissions/{UserId}")
     public AccessCheckAnswer accessCheck(@RequestParam(name = "path")   @NotBlank   String path,
                                          @PathVariable                  @Min(1)     Long UserId){
         return new AccessCheckAnswer(accessControlService.accessCheck(path, UserId));

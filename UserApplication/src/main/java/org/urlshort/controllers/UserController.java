@@ -1,5 +1,8 @@
 package org.urlshort.controllers;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -13,40 +16,42 @@ import org.urlshort.services.UserService;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userServ;
+    private final UserService userService;
 
     @PutMapping("/user")
-    public void createUser(@RequestBody UserCreateRequest user){
-        userServ.createUser(user);
+    public void createUser(@RequestBody @Valid UserCreateRequest user){
+        userService.createUser(user);
     }
 
     @PostMapping("/user/{id}/linksPerDay/decrement")
-    public DecreaseResultAnswer decreaseUserLinks(@PathVariable Long id){
-        return userServ.decreaseUserLinks(id);
+    public DecreaseResultAnswer decreaseUserLinks(@PathVariable @Min(1) Long id){
+        return new DecreaseResultAnswer(
+                userService.decreaseUserLinks(id)
+        );
     }
 
     @GetMapping("/user")
-    public UserInfo userByEmail(@RequestBody UserMailRequest mailRequest){
-        return userServ.userByEmail(mailRequest);
+    public UserInfo userByEmail(@RequestBody @Valid UserMailRequest mailRequest){
+        return userService.userByEmail(mailRequest);
     }
     @GetMapping("/users")
-    public Page<UserInfo> allUsers(@RequestParam Integer page,
-                                   @RequestParam Integer limits)
+    public Page<UserInfo> allUsers(@RequestParam @NotNull @Min(0) Integer page,
+                                   @RequestParam @NotNull @Min(1) Integer limits)
     {
-        return userServ.getUsers(page, limits);
+        return userService.getUsers(page, limits);
     }
 
-    @PostMapping("/user/{id}/linksPerDay")
+    @PostMapping("/users/{userId}/linksPerDay")
     public void refactorUserLinks(@RequestParam(name = "count") Integer linksCount,
-                                    @PathVariable Long id)
+                                    @PathVariable Long userId)
     {
-        userServ.setUserLinks(id, linksCount);
+        userService.setUserLinks(userId, linksCount);
     }
 
-    @DeleteMapping("/user/{id}")
-    public void revertCreateUser(@PathVariable Long id)
+    @DeleteMapping("/users/{id}")
+    public void revertCreateUser(@PathVariable @Min(1) @NotNull Long id)
     {
-        userServ.deleteUser(id);
+        userService.deleteUser(id);
     }
 
 

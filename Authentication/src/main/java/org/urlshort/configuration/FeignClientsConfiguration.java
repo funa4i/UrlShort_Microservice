@@ -8,7 +8,6 @@ import org.urlshort.feign.RetrieveMessageErrorDecoder;
 @Configuration
 public class FeignClientsConfiguration {
 
-
     @Bean
     public ErrorDecoder errorDecoder(){
         return new RetrieveMessageErrorDecoder();

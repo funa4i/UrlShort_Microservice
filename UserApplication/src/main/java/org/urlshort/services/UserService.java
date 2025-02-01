@@ -1,52 +1,83 @@
 package org.urlshort.services;
 
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.urlshort.domain.UserModel;
+import org.springframework.transaction.annotation.Transactional;
 import org.urlshort.domain.data.*;
+import org.urlshort.domain.entity.User;
+import org.urlshort.exceptions.AlreadyExistsException;
+import org.urlshort.exceptions.NullObjectException;
 import org.urlshort.mappers.UserMapper;
+import org.urlshort.util.UserManager;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
-    private final UserModel userModel;
-
     private final UserMapper userMapper;
+    private final UserManager userManager;
+    @Value("${app.default.linksPerDay}")
+    private Integer defaultLinksPerDay;
 
-    public void createUser(@Valid UserCreateRequest user){
-        userModel.createUserWithId(user.getId(), user.getEmail());
+    @Transactional
+    public void createUser( UserCreateRequest user){
+        if (userManager.existsById(user.getId())){
+            throw new AlreadyExistsException(User.class, user.getId().toString());
+        }
+        if (userManager.existsByEmail(user.getEmail())){
+            throw new AlreadyExistsException(User.class, user.getEmail());
+        }
+        var newUser = userMapper.toUser(user);
+        newUser.setLinksPerDay(defaultLinksPerDay);
+        userManager.save(newUser);
     }
 
-    public DecreaseResultAnswer decreaseUserLinks(@Min(1) @NotNull Long id){
-        return new DecreaseResultAnswer(
-                userModel.decreaseUserLinksLeft(id)
-        );
+    @Transactional
+    public boolean decreaseUserLinks(Long id){
+        var user = userManager.findById(id);
+        if (LocalDateTime.now().isAfter(user.getDayCreate().plusDays(1))){
+            user.setLinksLeft(user.getLinksPerDay());
+            user.setDayCreate(LocalDateTime.now());
+        }
+
+        if (user.getLinksLeft() <= 0){
+            userManager.save(user);
+            return false;
+        }
+        user.setLinksLeft(user.getLinksLeft() - 1);
+        userManager.save(user);
+        return true;
     }
 
-    public UserInfo userByEmail(@Valid UserMailRequest mail){
+    @Transactional
+    public UserInfo userByEmail( UserMailRequest mail){
         return userMapper.toUserInfo(
-                userModel.getUserByMail(mail.getEmail())
+                userManager.findUserByEmail(mail.getEmail())
         );
     }
 
-    public void deleteUser(@Min(1) @NotNull Long id){
-        userModel.deleteUserById(id);
+    @Transactional
+    public void deleteUser(Long id){
+        if(userManager.existsById(id)){
+            throw new NullObjectException(User.class, id.toString());
+        }
+        userManager.delete(id);
     }
 
-    public Page<UserInfo> getUsers(@NotNull @Min(0) Integer page,
-                                   @NotNull @Min(1) Integer limits){
-        return userModel.getAllUsers(page, limits)
+    @Transactional
+    public Page<UserInfo> getUsers(Integer page, Integer limits){
+        return userManager.findAll(page, limits)
                 .map(userMapper::toUserInfo);
     }
 
-    public void setUserLinks(@Min(1) @NotNull Long userId,
-                             @Min(1) @NotNull Integer linksCount){
-        userModel.setUserLinksPerDay(userId, linksCount);
+    @Transactional
+    public void setUserLinks(Long userId, Integer linksCount){
+        var user = userManager.findById(userId);
+        user.setLinksPerDay(linksCount);
+        userManager.save(user);
     }
 }

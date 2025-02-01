@@ -1,6 +1,7 @@
 package org.urlshort.controllers;
 
 
+import jakarta.validation.Valid;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,12 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/sing-in")
-    public JwtResponse singIn(@RequestBody CreateUserRequest newUser){
+    public JwtResponse singIn(@RequestBody @Valid CreateUserRequest newUser){
         return new JwtResponse(authService.singIn(newUser));
     }
 
     @PostMapping("/log-in")
-    public JwtResponse logIn(@RequestBody UserValid user){
+    public JwtResponse logIn(@RequestBody @Valid UserValid user){
         return new JwtResponse(authService.logIn(user));
     }
 
