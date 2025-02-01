@@ -15,7 +15,6 @@ import org.urlshort.exceptions.UncheckedException;
 @Slf4j
 @RestControllerAdvice
 public class AppExceptionHandler {
-
     @ExceptionHandler({NullPointerException.class, NotFoundException.class, })
     public ResponseEntity<ExceptionView> notExistHandler(Exception ex){
         ExceptionView exc = new ExceptionView(ExceptionAnswer.REQUIRED_OBJECT_NOT_FOUND);

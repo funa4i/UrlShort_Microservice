@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExceptionMessage {
-
     String exception;
-
     String timestamp;
-
     String message;
 }

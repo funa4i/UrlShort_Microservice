@@ -7,12 +7,8 @@ import java.time.LocalDateTime;
 
 @Data
 public class ExceptionView {
-
-
     private ExceptionAnswer exception;
-
     private LocalDateTime timestamp;
-
     private String message;
 
     public ExceptionView(ExceptionAnswer exception) {

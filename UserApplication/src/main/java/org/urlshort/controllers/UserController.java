@@ -18,12 +18,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @PutMapping("/user")
+    @PostMapping("/users")
     public void createUser(@RequestBody @Valid UserCreateRequest user){
         userService.createUser(user);
     }
 
-    @PostMapping("/user/{id}/linksPerDay/decrement")
+    @PatchMapping("/user/{id}/linksPerDay/decrement")
     public DecreaseResultAnswer decreaseUserLinks(@PathVariable @Min(1) Long id){
         return new DecreaseResultAnswer(
                 userService.decreaseUserLinks(id)
@@ -41,7 +41,7 @@ public class UserController {
         return userService.getUsers(page, limits);
     }
 
-    @PostMapping("/users/{userId}/linksPerDay")
+    @PatchMapping("/users/{userId}/linksPerDay")
     public void refactorUserLinks(@RequestParam(name = "count") Integer linksCount,
                                     @PathVariable Long userId)
     {

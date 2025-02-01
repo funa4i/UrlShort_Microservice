@@ -6,9 +6,7 @@ import lombok.Data;
 
 @Data
 public class UserMailRequest {
-
     @Email
     @NotNull
     private String email;
-
 }

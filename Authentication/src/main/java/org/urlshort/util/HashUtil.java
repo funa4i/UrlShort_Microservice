@@ -4,7 +4,6 @@ package org.urlshort.util;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class HashUtil {
-
     public static String generateHash(String password){
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
@@ -17,7 +16,4 @@ public class HashUtil {
     private static String getSalt(String hash){
         return hash.substring(0, 29);
     }
-
-
-
 }

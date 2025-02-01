@@ -7,7 +7,6 @@ import org.urlshort.domain.data.DecreaseResultAnswer;
 
 @FeignClient(name = "user-service")
 public interface UserApplicationApi {
-
-    @PostMapping("/user/{id}/linksPerDay/decrement")
+    @PatchMapping("/users/{id}/linksPerDay/decrement")
     DecreaseResultAnswer decreaseUserLinks(@PathVariable Long id);
 }

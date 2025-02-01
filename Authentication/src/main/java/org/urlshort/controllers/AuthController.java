@@ -17,7 +17,6 @@ import org.urlshort.services.AuthService;
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-
     private final AuthService authService;
 
     @PostMapping("/sing-in")

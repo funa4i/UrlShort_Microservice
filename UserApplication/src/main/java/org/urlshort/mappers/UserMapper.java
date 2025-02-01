@@ -12,9 +12,7 @@ import java.time.LocalDateTime;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {LocalDateTime.class})
 public interface UserMapper {
-
     UserInfo toUserInfo(User user);
-
 
     @Mapping(target = "id", source = "userCreateRequest.id")
     @Mapping(target = "email", source = "userCreateRequest.email")

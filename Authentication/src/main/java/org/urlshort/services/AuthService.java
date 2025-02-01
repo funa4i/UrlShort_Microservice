@@ -2,13 +2,9 @@ package org.urlshort.services;
 
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-import org.bouncycastle.crypto.generators.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.urlshort.domain.AuthModel;
 import org.urlshort.domain.data.CreateUserRequest;
 import org.urlshort.domain.data.UserValid;
 import org.urlshort.domain.entities.User;

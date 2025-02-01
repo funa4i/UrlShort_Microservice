@@ -11,12 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExceptionView {
-
-
     private ExceptionAnswer exception;
-
     private LocalDateTime timestamp;
-
     private String message;
 
     public ExceptionView(ExceptionAnswer exception) {

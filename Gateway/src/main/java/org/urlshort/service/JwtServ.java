@@ -13,7 +13,6 @@ import java.util.List;
 
 @Component
 public class JwtServ {
-
     @Value(value = "${spring.jwt.secret}")
     private String secret;
 

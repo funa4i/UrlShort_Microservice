@@ -1,18 +1,14 @@
 package org.urlshort.feign;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
-import org.urlshort.advice.ExceptionView;
 import org.urlshort.exceptions.BadRequestException;
 import org.urlshort.exceptions.NotFoundException;
 import org.urlshort.exceptions.UncheckedException;
 import org.urlshort.advice.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class RetrieveMessageErrorDecoder implements ErrorDecoder {
     @Override

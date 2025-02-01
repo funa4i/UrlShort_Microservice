@@ -12,7 +12,6 @@ import org.urlshort.exceptions.NullObjectException;
 @Slf4j
 @RestControllerAdvice
 public class AppExceptionHandler {
-
     @ExceptionHandler({NullObjectException.class})
     public ResponseEntity<ExceptionView> notExistHandler(Exception ex){
         ExceptionView exc = new ExceptionView(ExceptionAnswer.REQUIRED_OBJECT_NOT_FOUND);

@@ -16,7 +16,6 @@ import org.urlshort.feign.clients.UrlShortApi;
 @Service
 @RequiredArgsConstructor
 public class UrlShortService {
-
     private final UrlShortApi urlShortApi;
 
     @Value("${app.UrlPath}")

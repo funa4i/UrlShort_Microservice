@@ -6,7 +6,6 @@ import java.security.SecureRandom;
 
 @Service
 public class ShortUrUtil {
-
     private static final StringBuilder  alphabet = new StringBuilder("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-");
 
     public static String getNextValue() {

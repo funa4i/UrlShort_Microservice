@@ -83,7 +83,6 @@ public class UrlShortService {
         return  urlManager.findAll(page, limit)
                 .map(urlMapper::toUrlView);
     }
-
 }
 
 

@@ -28,7 +28,6 @@ ALTER TABLE path
     ADD CONSTRAINT un_name_path     UNIQUE(name);
 
 
-
 CREATE TABLE path_role(
     path_id BIGINT,
     role_id BIGINT

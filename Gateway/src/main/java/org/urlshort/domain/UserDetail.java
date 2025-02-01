@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class UserDetail implements UserDetails {
-
     private Long id;
 
     @Override

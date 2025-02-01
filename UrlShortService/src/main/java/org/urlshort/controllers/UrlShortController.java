@@ -16,7 +16,6 @@ import org.urlshort.services.UrlShortService;
 @RestController
 @RequiredArgsConstructor
 public class UrlShortController {
-
     private final UrlShortService urlShortService;
 
     @GetMapping("/urls")

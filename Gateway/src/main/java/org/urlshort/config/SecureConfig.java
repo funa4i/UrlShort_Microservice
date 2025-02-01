@@ -28,11 +28,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecureConfig {
-
     private final UserDetailService userServ;
-
     private final JwtReqFilter jwtReqFilter;
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

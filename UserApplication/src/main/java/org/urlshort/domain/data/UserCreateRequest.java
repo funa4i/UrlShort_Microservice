@@ -8,7 +8,6 @@ import lombok.Data;
 
 @Data
 public class UserCreateRequest {
-
     @Min(1)
     @NotNull
     private Long id;

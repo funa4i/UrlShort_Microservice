@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class LinkCountRefactor {
-
     @Min(1)
     @NotNull
     private Long userId;

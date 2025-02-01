@@ -20,13 +20,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class JwtServ {
-
     @Value(value = "${spring.jwt.secret}")
     private String secret;
-
     @Value(value = "${spring.jwt.duration}")
     private Duration lifeTime;
-
 
     public String generateToken(User user){
         return Jwts.builder()

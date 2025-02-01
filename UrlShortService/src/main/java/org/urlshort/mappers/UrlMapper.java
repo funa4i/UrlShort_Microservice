@@ -12,11 +12,9 @@ import org.urlshort.domain.entities.Url;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UrlMapper {
-
     @Mapping(target = "fullUrl", source = "url")
     Url toUrl(UrlCreateRequest urlCreateRequest);
 
     @Mapping(target = "userid", expression = "java(url.getUserId())")
     UrlView toUrlView(Url url);
-
 }
