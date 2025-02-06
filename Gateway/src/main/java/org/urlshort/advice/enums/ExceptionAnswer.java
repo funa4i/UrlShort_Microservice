@@ -5,5 +5,7 @@ public enum ExceptionAnswer {
 
     INVALID_ROLE,
 
+    BAD_GATEWAY,
+
     INVALID_DATA_FORMAT
 }

@@ -14,9 +14,12 @@ public class UrlShortController {
     private final UrlShortService urlShortService;
 
     @PostMapping("/urls")
-    public UrlView createUrl(@RequestBody UrlCreateRequest url){
-        url.setUserid(Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return urlShortService.createUrl(url);
+    public UrlView createUrl(@RequestBody UrlCreateRequest urlCreateRequest){
+        urlCreateRequest.setUserid(
+                Long.parseLong(
+                        SecurityContextHolder.getContext().getAuthentication().getName()
+                ));
+        return urlShortService.createUrl(urlCreateRequest);
     }
 
 }

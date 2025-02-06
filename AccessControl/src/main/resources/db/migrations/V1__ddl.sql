@@ -22,6 +22,7 @@ ALTER TABLE user_role
 
 CREATE TABLE path(
     id      BIGSERIAL           PRIMARY KEY,
+    method  varchar(25)         NOT NULL,
     name    varchar(255)        NOT NULL     UNIQUE
 );
 ALTER TABLE path
@@ -36,5 +37,3 @@ ALTER TABLE path_role
     ADD CONSTRAINT  pk_path_role    PRIMARY KEY(path_id, role_id),
     ADD CONSTRAINT  fk_path         FOREIGN KEY(path_id)                REFERENCES path(id),
     ADD CONSTRAINT  fk_role         FOREIGN KEY(role_id)                REFERENCES role(id);
-
-

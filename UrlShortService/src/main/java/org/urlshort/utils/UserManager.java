@@ -3,17 +3,18 @@ package org.urlshort.utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.urlshort.domain.entities.User;
+import org.urlshort.domain.repositories.UserRepository;
 
 @Component
 @RequiredArgsConstructor
 public class UserManager {
-    private final UserManager userManager;
+    private final UserRepository userRepository;
 
     public boolean existsById(Long userId){
-        return userManager.existsById(userId);
+        return userRepository.existsById(userId);
     }
 
     public void save(User user){
-        userManager.save(user);
+        userRepository.save(user);
     }
 }

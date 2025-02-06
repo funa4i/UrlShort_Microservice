@@ -16,8 +16,7 @@ public class AccessController {
 
     @PatchMapping("/users/{id}/roles")
     public void setUserRole(@PathVariable   @Min(1)     Long id,
-                            @RequestBody    @NotBlank   RoleRequest role)
-    {
+                            @RequestBody    @NotBlank   RoleRequest role) {
         accessControlService.setUserRole(id, role.getRole());
     }
 

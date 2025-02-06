@@ -33,6 +33,7 @@ public class UserService {
         }
         var newUser = userMapper.toUser(user);
         newUser.setLinksPerDay(defaultLinksPerDay);
+        newUser.setLinksLeft(defaultLinksPerDay);
         userManager.save(newUser);
     }
 

@@ -1,5 +1,6 @@
 package org.urlshort.advice;
 
+import feign.FeignException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.urlshort.exceptions.UncheckedException;
 public class AppExceptionHandler {
     @ExceptionHandler({NullPointerException.class, NotFoundException.class})
     public ResponseEntity<ExceptionView> notExistHandler(Exception ex){
+        log.warn(ex.getMessage());
         ExceptionView exc = new ExceptionView(ExceptionAnswer.REQUIRED_OBJECT_NOT_FOUND);
         exc.setMessage(ex.getMessage());
         return ResponseEntity
@@ -23,8 +25,20 @@ public class AppExceptionHandler {
                 .body(exc);
     }
 
-    @ExceptionHandler({ConstraintViolationException.class, UncheckedException.class, })
+    @ExceptionHandler({UncheckedException.class})
+    public ResponseEntity<ExceptionView> feignException(Exception ex){
+        log.warn(ex.getMessage());
+        ExceptionView exc = new ExceptionView(ExceptionAnswer.BAD_GATEWAY);
+        exc.setMessage(ex.getMessage());
+        return ResponseEntity
+                .status(502)
+                .body(exc);
+    }
+
+
+    @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<ExceptionView> badValidation(Exception ex){
+        log.warn(ex.getMessage());
         ExceptionView exc = new ExceptionView(ExceptionAnswer.INVALID_DATA_FORMAT);
         exc.setMessage(ex.getMessage());
         return ResponseEntity
@@ -34,6 +48,7 @@ public class AppExceptionHandler {
 
     @ExceptionHandler({InvalidRoleForePath.class})
     public ResponseEntity<ExceptionView> pathValid(Exception ex){
+        log.warn(ex.getMessage());
         ExceptionView exc = new ExceptionView(ExceptionAnswer.INVALID_ROLE);
         exc.setMessage(ex.getMessage());
         return ResponseEntity

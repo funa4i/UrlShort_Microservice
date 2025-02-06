@@ -15,7 +15,6 @@ import org.urlshort.services.UserService;
 @RestController
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
 
     @PostMapping("/users")
@@ -53,6 +52,4 @@ public class UserController {
     {
         userService.deleteUser(id);
     }
-
-
 }

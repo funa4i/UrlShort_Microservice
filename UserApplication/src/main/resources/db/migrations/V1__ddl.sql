@@ -1,5 +1,5 @@
 CREATE TABLE users(
-    id                  BIGINT          PRIMARY KEY(id),
+    id                  BIGINT          PRIMARY KEY,
     email               varchar(255)    NOT NULL,
     links_per_day       serial          NOT NULL,
     links_left          serial          NOT NULL,

@@ -10,12 +10,12 @@ import org.urlshort.domain.entity.User;
 
 import java.time.LocalDateTime;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {LocalDateTime.class})
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
     UserInfo toUserInfo(User user);
 
     @Mapping(target = "id", source = "userCreateRequest.id")
     @Mapping(target = "email", source = "userCreateRequest.email")
-    @Mapping(target = "dayCreate", expression = "java(LocalDateTime.now())")
+    @Mapping(target = "dayCreate", expression = "java(java.time.LocalDateTime.now())")
     User toUser(UserCreateRequest userCreateRequest);
 }
