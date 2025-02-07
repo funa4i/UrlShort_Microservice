@@ -16,6 +16,7 @@ import org.urlshort.domain.exceptions.UncheckedException;
 public class AppExceptionHandler {
     @ExceptionHandler({NullPointerException.class, NotFoundException.class, })
     public ResponseEntity<ExceptionView> notExistHandler(Exception ex){
+        log.warn(ex.getMessage());
         ExceptionView exc = new ExceptionView(ExceptionAnswer.REQUIRED_OBJECT_NOT_FOUND);
         exc.setMessage(ex.getMessage());
         return ResponseEntity
@@ -26,6 +27,7 @@ public class AppExceptionHandler {
     @ExceptionHandler({ConstraintViolationException.class,
             AttemptCountException.class, UncheckedException.class, })
     public ResponseEntity<ExceptionView> badValidation(Exception ex){
+        log.warn(ex.getMessage());
         ExceptionView exc = new ExceptionView(ExceptionAnswer.INVALID_DATA_FORMAT);
         exc.setMessage(ex.getMessage());
         return ResponseEntity

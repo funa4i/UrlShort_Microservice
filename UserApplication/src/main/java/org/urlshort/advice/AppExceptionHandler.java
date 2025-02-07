@@ -15,6 +15,7 @@ import org.urlshort.exceptions.NullObjectException;
 public class AppExceptionHandler {
     @ExceptionHandler({NullObjectException.class})
     public ResponseEntity<ExceptionView> notExistHandler(Exception ex){
+        log.warn(ex.getMessage());
         ExceptionView exc = new ExceptionView(ExceptionAnswer.REQUIRED_OBJECT_NOT_FOUND);
         exc.setMessage(ex.getMessage());
         return ResponseEntity
@@ -24,6 +25,7 @@ public class AppExceptionHandler {
 
     @ExceptionHandler({ConstraintViolationException.class, AlreadyExistsException.class})
     public ResponseEntity<ExceptionView> badValidation(Exception ex){
+        log.warn(ex.getMessage());
         ExceptionView exc = null;
         if (ex instanceof AlreadyExistsException){
             exc = new ExceptionView(ExceptionAnswer.OBJECT_ALREADY_EXISTS);
