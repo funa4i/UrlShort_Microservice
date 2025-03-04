@@ -23,10 +23,8 @@ ALTER TABLE user_role
 CREATE TABLE path(
     id      BIGSERIAL           PRIMARY KEY,
     method  varchar(25)         NOT NULL,
-    name    varchar(255)        NOT NULL     UNIQUE
+    name    varchar(255)        NOT NULL
 );
-ALTER TABLE path
-    ADD CONSTRAINT un_name_path     UNIQUE(name);
 
 
 CREATE TABLE path_role(

@@ -33,6 +33,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecureConfig {
     private final UserDetailService userServ;
     private final JwtReqFilter jwtReqFilter;
+    private final PathsConfig pathsConfig;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -46,9 +47,7 @@ public class SecureConfig {
                     return corsConfiguration;
                 }))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/{url}").permitAll()
-                        .requestMatchers("/sing-in").permitAll()
-                        .requestMatchers("/log-in").permitAll()
+                        .requestMatchers(pathsConfig.getPublicApi().toArray(new String[0])).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))

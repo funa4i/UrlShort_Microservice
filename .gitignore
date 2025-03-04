@@ -42,3 +42,4 @@ build/
 /Gateway/.gitignore
 /UrlShortService/.gitignore
 /UserApplication/.gitignore
+/NotificationService/.gitignore

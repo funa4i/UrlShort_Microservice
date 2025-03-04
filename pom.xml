@@ -16,6 +16,7 @@
     <module>Gateway</module>
       <module>UserApplication</module>
     <module>UrlShortService</module>
+    <module>NotificationService</module>
   </modules>
 
   <properties>

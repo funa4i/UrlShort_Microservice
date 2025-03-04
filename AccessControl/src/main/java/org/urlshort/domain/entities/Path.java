@@ -22,7 +22,7 @@ public class Path {
     @Column(name = "method", nullable = false)
     private RequestMethod method;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "paths",fetch = FetchType.LAZY)

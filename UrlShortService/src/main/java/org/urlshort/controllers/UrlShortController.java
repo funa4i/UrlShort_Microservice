@@ -8,12 +8,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.urlshort.domain.data.UrlCreateRequest;
 import org.urlshort.domain.data.UrlView;
+import org.urlshort.domain.exceptions.NullObjectException;
 import org.urlshort.services.UrlShortService;
+import org.urlshort.utils.UserInfo;
 
 @Slf4j
 @RestController
@@ -21,6 +23,8 @@ import org.urlshort.services.UrlShortService;
 public class UrlShortController {
     private final UrlShortService urlShortService;
     private ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private UserInfo userInfo;
 
     @GetMapping("/urls")
     public Page<UrlView> getUrls(@RequestParam @Min(0) @NotNull Integer page,
@@ -37,11 +41,15 @@ public class UrlShortController {
 
     @PostMapping("/urls")
     public UrlView createUrl(@RequestBody UrlCreateRequest urlCreateRequest) throws JsonProcessingException {
+        if (userInfo.getUserId() == null){
+            throw new NullObjectException(UserInfo.class, "id");
+        }
+        urlCreateRequest.setUserid(userInfo.getUserId());
         log.info("/urls: {urlCreateRequest: {}}", objectMapper.writeValueAsString(urlCreateRequest));
         return urlShortService.createUrl(urlCreateRequest);
     }
 
-    @GetMapping("/{url}")
+    @GetMapping("/sh/{url}")
     public String getLong(@PathVariable("url") @NotBlank String shortUrl) {
         log.info("/{url}: {shortUrl: {}}", shortUrl);
         return urlShortService.getUrl(shortUrl);

@@ -24,7 +24,7 @@ spring:
             predicates:
               - Path=/urls/**
               - Method=GET,DELETE
-              - Path=/{url}
+              - Path=/sh/**
               - Method=GET
           - id: user-service
             uri: lb://user-service
@@ -49,3 +49,7 @@ eureka:
 
 app:
   UrlPath: localhost:8080/
+  publicApi:
+    - "/sing-in"
+    - "/log-in"
+    - "/sh/**"
