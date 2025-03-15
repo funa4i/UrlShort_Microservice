@@ -41,10 +41,18 @@ services:
           memory: 1G
     networks:
       - postgres
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
 volumes:
   urlShortener-data:
   pgadmin-data:
+  rabbitmq_data:
 
 networks:
   postgres:
