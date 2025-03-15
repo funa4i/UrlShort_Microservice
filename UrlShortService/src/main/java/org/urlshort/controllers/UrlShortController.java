@@ -15,7 +15,7 @@ import org.urlshort.domain.data.UrlCreateRequest;
 import org.urlshort.domain.data.UrlView;
 import org.urlshort.domain.exceptions.NullObjectException;
 import org.urlshort.services.UrlShortService;
-import org.urlshort.utils.UserInfo;
+import org.urlshort.domain.data.UserInfo;
 
 @Slf4j
 @RestController

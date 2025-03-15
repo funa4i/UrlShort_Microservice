@@ -22,7 +22,7 @@ import org.urlshort.services.AuthService;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     @PostMapping("/sing-in")
     public JwtResponse singIn(@RequestBody @Valid CreateUserRequest createUserRequest) throws JsonProcessingException {

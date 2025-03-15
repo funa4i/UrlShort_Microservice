@@ -8,8 +8,6 @@ import org.urlshort.domain.entities.Url;
 import org.urlshort.domain.exceptions.NullObjectException;
 import org.urlshort.domain.repositories.UrlRepository;
 
-import java.awt.print.Pageable;
-
 @Component
 @RequiredArgsConstructor
 public class UrlManager {
@@ -22,9 +20,7 @@ public class UrlManager {
                 );
     }
 
-    public void delete(Url url){
-        urlRepository.delete(url);
-    }
+    public void delete(Url url){urlRepository.delete(url);}
 
     public void delete(Long urlId){
         urlRepository.deleteById(urlId);

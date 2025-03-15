@@ -24,40 +24,45 @@ public class UserController {
 
     @PostMapping("/users")
     public void createUser(@RequestBody @Valid UserCreateRequest userCreateRequest) throws JsonProcessingException {
-        log.info("/users: {userCreateRequest: {}}", objectMapper.writeValueAsString(userCreateRequest));
+        log.info("POST /users: {userCreateRequest: {}}", objectMapper.writeValueAsString(userCreateRequest));
         userService.createUser(userCreateRequest);
     }
 
     @PatchMapping("/user/{id}/linksPerDay/decrement")
     public DecreaseResultAnswer decreaseUserLinks(@PathVariable @Min(1) Long id){
-        log.info("/user/{id}/linksPerDay/decrement: {id: {}}", id);
+        log.info("PATCH /user/{id}/linksPerDay/decrement: {id: {}}", id);
         return new DecreaseResultAnswer(
                 userService.decreaseUserLinks(id)
         );
     }
+    @GetMapping("/users/{id}")
+    public UserInfo userById(@PathVariable Long id) {
+        log.info("GET /users/{id}: {id: {}}", id);
+        return userService.userById(id);
+    }
 
     @GetMapping("/user")
     public UserInfo userByEmail(@RequestBody @Valid UserMailRequest userMailRequest) throws JsonProcessingException {
-        log.info("/user: {userMailRequest: {}}", objectMapper.writeValueAsString(userMailRequest));
+        log.info("GET /user: {userMailRequest: {}}", objectMapper.writeValueAsString(userMailRequest));
         return userService.userByEmail(userMailRequest);
     }
     @GetMapping("/users")
     public Page<UserInfo> allUsers(@RequestParam @NotNull @Min(0) Integer page,
                                    @RequestParam @NotNull @Min(1) Integer limits) {
-        log.info("/users: {page: {} limits: {}}", page, limits);
+        log.info("GET /users: {page: {} limits: {}}", page, limits);
         return userService.getUsers(page, limits);
     }
 
     @PatchMapping("/users/{userId}/linksPerDay")
     public void refactorUserLinks(@RequestParam(name = "count") Integer linksCount,
                                     @PathVariable Long userId) {
-        log.info("/users/{userId}/linksPerDay: {linscCount: {}, userId: {}}", linksCount, userId);
+        log.info("PATCH /users/{userId}/linksPerDay: {linscCount: {}, userId: {}}", linksCount, userId);
         userService.setUserLinks(userId, linksCount);
     }
 
     @DeleteMapping("/users/{id}")
     public void revertCreateUser(@PathVariable @Min(1) @NotNull Long id) {
-        log.info("/users/{id}: {id: {}}", id);
+        log.info("DELETE /users/{id}: {id: {}}", id);
         userService.deleteUser(id);
     }
 }

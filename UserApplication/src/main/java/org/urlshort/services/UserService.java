@@ -38,6 +38,11 @@ public class UserService {
     }
 
     @Transactional
+    public UserInfo userById(Long id){
+        return userMapper.toUserInfo(userManager.findById(id));
+    }
+
+    @Transactional
     public boolean decreaseUserLinks(Long id){
         var user = userManager.findById(id);
         if (LocalDateTime.now().isAfter(user.getDayCreate().plusDays(1))){

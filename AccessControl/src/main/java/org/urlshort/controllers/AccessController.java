@@ -11,6 +11,8 @@ import org.urlshort.domain.data.AccessCheckAnswer;
 import org.urlshort.domain.data.RoleRequest;
 import org.urlshort.services.AccessControlService;
 
+import java.util.List;
+
 
 @Slf4j
 @RestController
@@ -43,5 +45,11 @@ public class AccessController {
                                          @PathVariable                  @Min(1)     Long userId){
         log.info("revertUserCreate: {userId: {} path: {}}", userId, path);
         return new AccessCheckAnswer(accessControlService.accessCheck(path, userId));
+    }
+
+    @GetMapping("/admins")
+    public List<Long> adminList(){
+        log.info("GET /admins");
+        return accessControlService.adminListId();
     }
 }

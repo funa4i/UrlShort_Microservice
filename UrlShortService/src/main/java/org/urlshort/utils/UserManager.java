@@ -3,12 +3,18 @@ package org.urlshort.utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.urlshort.domain.entities.User;
+import org.urlshort.domain.exceptions.NullObjectException;
 import org.urlshort.domain.repositories.UserRepository;
 
 @Component
 @RequiredArgsConstructor
 public class UserManager {
     private final UserRepository userRepository;
+
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NullObjectException(User.class, userId.toString()));
+    }
 
     public boolean existsById(Long userId){
         return userRepository.existsById(userId);

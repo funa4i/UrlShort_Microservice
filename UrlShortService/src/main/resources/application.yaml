@@ -1,6 +1,16 @@
 spring:
   application:
     name: url-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    routs:
+      expiredLinkRout: notification.linkExpired
+      createInfoRoutKey: notification.linkCreated
+    exchangers:
+      notificationExchange: notification
   datasource:
     url: jdbc:postgresql://localhost:5430/url
     username: root

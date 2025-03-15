@@ -28,6 +28,7 @@ public class UrlShortService {
     private final UserManager userManager;
     private final UrlManager urlManager;
     private final UserApplicationApi userApplicationApi;
+    private final RabbitSender rabbitSender;
     @Value(value = "${app.default.linkDurationDays}")
     private Long linkDurationDays;
 
@@ -36,6 +37,7 @@ public class UrlShortService {
         var url = urlManager.findByShortUrl(shortUrl);
         url.setIterations(url.getIterations() - 1);
         if(url.getIterations() == 0){
+            rabbitSender.sendExpiredLinkNotificationAsync(url.getUserId(), url);
             urlManager.delete(url);
         }
         return url.getFullUrl();
@@ -50,22 +52,28 @@ public class UrlShortService {
     }
 
     @Transactional
+    private User createUser(Long userId){
+        var user = new User();
+        user.setId(userId);
+        userManager.save(user);
+        return user;
+    }
+
+
+    @Transactional
     public UrlView createUrl(@Valid UrlCreateRequest urlCreateRequest){
         var url = urlMapper.toUrl(urlCreateRequest);
-
-        var user = new User(urlCreateRequest.getUserid());
         if (!userManager.existsById(urlCreateRequest.getUserid())) {
-            userManager.save(user);
+            createUser(urlCreateRequest.getUserid());
         }
+        var user = userManager.findById(urlCreateRequest.getUserid());
 
         Boolean answer = userApplicationApi
                 .decreaseUserLinks(urlCreateRequest.getUserid())
                 .getReduced();
-
         if (!answer){
             throw new AttemptCountException();
         }
-
         url.setUser(user);
         var shorturl = "";
         do {

@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: user-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    paths:
+      notification: notification
+    queues:
+      linkCreationNotification: linkCreated
+      linkExpiredNotification: linkExpired
+      deadNotification: deadLetter
+    exchanges:
+      notificationExchange: notification
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: yourMail
+    password: yourApplicationPassword
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false

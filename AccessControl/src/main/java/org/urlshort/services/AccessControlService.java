@@ -10,6 +10,9 @@ import org.urlshort.exceptions.AlreadyExistsException;
 import org.urlshort.utils.RoleManager;
 import org.urlshort.utils.UserManager;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class AccessControlService {
@@ -19,11 +22,18 @@ public class AccessControlService {
    @Value("${role.default}")
    private String defaultRole;
 
+   @Transactional
    public void setUserRole(Long id, String roleName){
         var role = roleManager.findByName(roleName);
         var user = userManager.findById(id);
         user.setRole(role);
         userManager.save(user);
+   }
+
+   @Transactional
+   public List<Long> adminListId(){
+       var role = roleManager.findByName("admin");
+       return userManager.findAllUsersByRole(role).stream().map(User::getId).collect(Collectors.toList());
    }
 
    @Transactional

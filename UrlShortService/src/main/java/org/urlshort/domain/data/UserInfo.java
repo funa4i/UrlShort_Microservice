@@ -1,4 +1,4 @@
-package org.urlshort.utils;
+package org.urlshort.domain.data;
 
 
 import lombok.Getter;

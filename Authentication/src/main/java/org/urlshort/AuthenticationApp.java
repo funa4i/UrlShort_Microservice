@@ -6,14 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class UrlShort
+public class AuthenticationApp
 {
     public static void main( String[] args )
     {
-        SpringApplication.run(UrlShort.class, args);
+        SpringApplication.run(AuthenticationApp.class, args);
+
     }
 }

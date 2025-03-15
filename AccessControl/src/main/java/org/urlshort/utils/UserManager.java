@@ -2,9 +2,12 @@ package org.urlshort.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.urlshort.domain.entities.Role;
 import org.urlshort.domain.entities.User;
 import org.urlshort.domain.repositories.UserRepository;
 import org.urlshort.exceptions.NullObjectException;
+
+import java.util.List;
 
 
 @Component
@@ -27,6 +30,10 @@ public class UserManager {
 
     public void deleteUser(Long userId){
         userRepository.deleteById(userId);
+    }
+
+    public List<User> findAllUsersByRole(Role role){
+        return userRepository.findAllByRole(role);
     }
 
     public void deleteUser(User user){

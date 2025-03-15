@@ -24,7 +24,7 @@ spring:
             predicates:
               - Path=/urls/**
               - Method=GET,DELETE
-              - Path=/sh/**
+              - Path=/sh/{url}
               - Method=GET
           - id: user-service
             uri: lb://user-service
@@ -35,7 +35,7 @@ spring:
               - Method=GET,POST
 
 server:
-  port: 8080
+  port: 8081
 eureka:
   instance:
     lease-renewal-interval-in-seconds: 5
@@ -52,4 +52,4 @@ app:
   publicApi:
     - "/sing-in"
     - "/log-in"
-    - "/sh/**"
+    - "/sh/{url}"

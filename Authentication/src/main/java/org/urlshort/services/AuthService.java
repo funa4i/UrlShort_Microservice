@@ -48,9 +48,7 @@ public class AuthService {
         userAuthManager.save(user);
         try {
             accessControl.createUser(user.getId());
-            userApplication.createUser(
-                    new UserCreateRequest(user.getId(), newUser.getEmail())
-            );
+            userApplication.createUser(new UserCreateRequest(user.getId(), newUser.getEmail()));
         }
         catch (NotFoundException |
                NullObjectException |
