@@ -28,8 +28,12 @@ eureka:
 
 app:
   default:
-    linkDurationDays: 10
     defaultLinkPath: localhost/
+  delays:
+    linkDuration: 10d
+    cronDelay: 50 23 * * * *
+    linkCheckDelay: 10d
+
 
 server:
   port: 0

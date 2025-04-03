@@ -37,7 +37,7 @@ public class RabbitSender {
     private String creationInfoRoutKey;
 
     @Async
-    public void sendCreateInfoNotificationAsync(Long userId, Long createAmount, LocalDateTime date){
+    public void sendCreateInfoNotificationAsync(Long userId, Long createAmount, LocalDate date){
         try {
             UserInfo  user = userApplicationApi.userById(userId);
             CreateLinkInfo createLinkInfo = new CreateLinkInfo(user.getEmail(), createAmount, date);

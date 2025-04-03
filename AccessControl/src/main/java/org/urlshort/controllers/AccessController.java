@@ -24,32 +24,32 @@ public class AccessController {
     @PatchMapping("/users/{id}/roles")
     public void setUserRole(@PathVariable   @Min(1)     Long id,
                             @RequestBody    @NotBlank   RoleRequest role) throws JsonProcessingException {
-        log.info("setUserRole: {id: {} role: {}}", id, objectMapper.writeValueAsString(role));
+        log.debug("Setting user role with {id: {} role: {}}", id, objectMapper.writeValueAsString(role));
         accessControlService.setUserRole(id, role.getRole());
     }
 
     @PostMapping("/users/{id}")
     public void createUser(@PathVariable @Min(1) Long id){
-        log.info("createUser: {id: {}}", id);
+        log.debug("Creating user with {id: {}}", id);
         accessControlService.createUser(id);
     }
 
     @DeleteMapping("/users/{id}")
     public void revertUserCreate(@PathVariable @Min(1) Long id){
-        log.info("revertUserCreate: {id: {}}", id);
+        log.debug("Revert create user by {id: {}}", id);
         accessControlService.deleteUser(id);
     }
 
     @GetMapping("/permissions/{userId}")
     public AccessCheckAnswer accessCheck(@RequestParam(name = "path")   @NotBlank   String path,
                                          @PathVariable                  @Min(1)     Long userId){
-        log.info("revertUserCreate: {userId: {} path: {}}", userId, path);
+        log.debug("Getting permission by user id and path: {userId: {} path: {}}", userId, path);
         return new AccessCheckAnswer(accessControlService.accessCheck(path, userId));
     }
 
     @GetMapping("/admins")
     public List<Long> adminList(){
-        log.info("GET /admins");
+        log.debug("Get admin list");
         return accessControlService.adminListId();
     }
 }

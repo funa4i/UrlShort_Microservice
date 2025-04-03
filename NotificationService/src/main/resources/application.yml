@@ -9,9 +9,9 @@ spring:
     paths:
       notification: notification
     queues:
-      linkCreationNotification: linkCreated
-      linkExpiredNotification: linkExpired
-      deadNotification: deadLetter
+      linkCreationQueue: linkCreated
+      linkExpiredQueue: linkExpired
+      deadNotificationQueue: deadLetter
     exchanges:
       notificationExchange: notification
   mail:

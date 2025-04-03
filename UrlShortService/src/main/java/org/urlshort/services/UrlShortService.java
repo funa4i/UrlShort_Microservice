@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.urlshort.config.DelayValues;
 import org.urlshort.domain.data.UrlCreateRequest;
 import org.urlshort.domain.data.UrlView;
 import org.urlshort.domain.entities.User;
@@ -29,8 +30,7 @@ public class UrlShortService {
     private final UrlManager urlManager;
     private final UserApplicationApi userApplicationApi;
     private final RabbitSender rabbitSender;
-    @Value(value = "${app.default.linkDurationDays}")
-    private Long linkDurationDays;
+    private final DelayValues delayValues;
 
     @Transactional
     public String getUrl(@NotBlank String shortUrl){
@@ -67,7 +67,6 @@ public class UrlShortService {
             createUser(urlCreateRequest.getUserid());
         }
         var user = userManager.findById(urlCreateRequest.getUserid());
-
         Boolean answer = userApplicationApi
                 .decreaseUserLinks(urlCreateRequest.getUserid())
                 .getReduced();
@@ -82,8 +81,9 @@ public class UrlShortService {
         }while (urlManager.existsByShortUrl(shorturl));
 
         url.setShortUrl(shorturl);
-        url.setValidUntil(LocalDateTime.now().plusDays(linkDurationDays));
+        url.setValidUntil(LocalDateTime.now().plusDays(delayValues.getLinkDuration().toDays()));
         urlManager.save(url);
+
         return urlMapper.toUrlView(url);
     }
 

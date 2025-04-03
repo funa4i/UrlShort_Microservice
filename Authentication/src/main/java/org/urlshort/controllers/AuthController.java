@@ -26,13 +26,13 @@ public class AuthController {
 
     @PostMapping("/sing-in")
     public JwtResponse singIn(@RequestBody @Valid CreateUserRequest createUserRequest) throws JsonProcessingException {
-        log.info("sing-in: {createUserRequest: {}}", objectMapper.writeValueAsString(createUserRequest));
+        log.debug("POST Sing-in: {createUserRequest: {}}", objectMapper.writeValueAsString(createUserRequest));
         return new JwtResponse(authService.singIn(createUserRequest));
     }
 
     @PostMapping("/log-in")
     public JwtResponse logIn(@RequestBody @Valid UserValid userValid) throws JsonProcessingException {
-        log.info("log-in: {userValid: {}}", objectMapper.writeValueAsString(userValid));
+        log.debug("POST Log-in: {userValid: {}}", objectMapper.writeValueAsString(userValid));
         return new JwtResponse(authService.logIn(userValid));
     }
 

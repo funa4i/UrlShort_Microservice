@@ -1,4 +1,4 @@
-package org.urlshort.advice.enums;
+package org.urlshort.enums;
 
 public enum ExceptionAnswer {
     REQUIRED_OBJECT_NOT_FOUND,

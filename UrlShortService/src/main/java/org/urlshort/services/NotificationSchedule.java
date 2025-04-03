@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.urlshort.config.DelayValues;
 import org.urlshort.feign.clients.AccessControlApi;
-import org.urlshort.utils.UrlCreateLogManager;
+import org.urlshort.utils.UrlManager;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -14,16 +16,23 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class NotificationSchedule {
     private final RabbitSender rabbitSender;
-    private final UrlCreateLogManager urlCreateLogManager;
+    private final UrlManager urlManager;
     private final AccessControlApi accessControlApi;
+    private final DelayValues delayValues;
 
-    @Scheduled(cron = "50 23 * * * *")
+    @Scheduled(cron = "#{@delayValues.getCronDelay()}")
     public void scheduleTaskUsingCronExpression() {
-        var timeNow = LocalDateTime.now();
-        var dateFrom = LocalDateTime.of(timeNow.getYear(), timeNow.getMonth(), timeNow.getDayOfMonth(), 0, 0);
+        var dateFrom =LocalDate.now();
         var dateTo = dateFrom.plusDays(1);
         var adminIdList = accessControlApi.adminList();
-        var createCount = (long) urlCreateLogManager.getAllCreateByPeriod(dateFrom, dateTo).size();
+        var createCount = (long) urlManager.findAllCreateAtByPeriod(dateFrom, dateTo).size();
         adminIdList.forEach((x) -> rabbitSender.sendCreateInfoNotificationAsync(x, createCount, dateFrom));
+    }
+
+    @Scheduled(fixedRateString = "#{@delayValues.getLinkCheckDelay().toMillis()}")
+    public void scheduleTaskUsingFixedDelay(){
+        var timeTo = LocalDateTime.now().minusNanos(delayValues.getLinkDuration().toNanos());
+        var resultList = urlManager.findAllExpiredLinks();
+        resultList.stream().parallel().forEach(urlManager::delete);
     }
 }

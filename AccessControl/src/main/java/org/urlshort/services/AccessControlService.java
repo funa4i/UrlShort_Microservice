@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.urlshort.domain.entities.Path;
 import org.urlshort.domain.entities.User;
+import org.urlshort.enums.Roles;
 import org.urlshort.exceptions.AlreadyExistsException;
 import org.urlshort.utils.RoleManager;
 import org.urlshort.utils.UserManager;
@@ -32,7 +33,7 @@ public class AccessControlService {
 
    @Transactional
    public List<Long> adminListId(){
-       var role = roleManager.findByName("admin");
+       var role = roleManager.findByName(Roles.Admin.name());
        return userManager.findAllUsersByRole(role).stream().map(User::getId).collect(Collectors.toList());
    }
 

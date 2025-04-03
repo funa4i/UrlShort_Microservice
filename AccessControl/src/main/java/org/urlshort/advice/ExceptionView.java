@@ -3,7 +3,7 @@ package org.urlshort.advice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.urlshort.advice.enums.ExceptionAnswer;
+import org.urlshort.enums.ExceptionAnswer;
 
 import java.time.LocalDateTime;
 

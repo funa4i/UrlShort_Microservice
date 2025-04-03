@@ -8,9 +8,4 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @Configuration
 @EnableAsync
 public class AsyncConfig {
-
-    @Bean
-    public ObjectMapper objectMapper(){
-        return new ObjectMapper();
-    }
 }

@@ -31,6 +31,9 @@ public class Url {
     @CreationTimestamp
     @Column(name = "valid_until", nullable = false)
     private LocalDateTime validUntil;
+    @CreationTimestamp
+    @Column(name = "time_create", nullable = false)
+    private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")

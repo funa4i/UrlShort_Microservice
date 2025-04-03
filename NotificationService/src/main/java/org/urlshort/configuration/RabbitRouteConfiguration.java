@@ -1,63 +1,55 @@
 package org.urlshort.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.*;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.Name;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.urlshort.configuration.rabbit.RabbitPaths;
 
 @Configuration
+@RequiredArgsConstructor
 public class RabbitRouteConfiguration {
-    @Value("${spring.rabbitmq.queues.linkCreationNotification}")
-    private String linkCreationQueue;
-    @Value("${spring.rabbitmq.queues.linkExpiredNotification}")
-    private String linkExpiredQueue;
-    @Value("${spring.rabbitmq.queues.deadNotification}")
-    private String deadNotificationQueue;
-    @Value("${spring.rabbitmq.exchanges.notificationExchange}")
-    private String notificationExchange;
-    @Value("${spring.rabbitmq.paths.notification}")
-    private String notificationRout;
+    private final RabbitConfigVariables rabbitConfigVariables;
     @Bean
     public Queue linkCreationQ(){
-        return QueueBuilder.durable(linkCreationQueue)
-                .deadLetterExchange(notificationExchange)
-                .deadLetterRoutingKey(deadNotificationQueue)
+        return QueueBuilder.durable(rabbitConfigVariables.getQueues().getLinkCreationQueue())
+                .deadLetterExchange(rabbitConfigVariables.getExchanges().getNotificationExchange())
+                .deadLetterRoutingKey(rabbitConfigVariables.getQueues().getDeadNotificationQueue())
                 .build();
     }
     @Bean Queue expiredLinkQ(){
-        return QueueBuilder.durable(linkExpiredQueue)
-                .deadLetterExchange(notificationExchange)
-                .deadLetterRoutingKey(deadNotificationQueue)
+        return QueueBuilder.durable(rabbitConfigVariables.getQueues().getLinkExpiredQueue())
+                .deadLetterExchange(rabbitConfigVariables.getExchanges().getNotificationExchange())
+                .deadLetterRoutingKey(rabbitConfigVariables.getQueues().getDeadNotificationQueue())
                 .build();
     }
     @Bean
     public Queue deadNotificationQ(){
-        return new Queue(deadNotificationQueue, true);
+        return new Queue(rabbitConfigVariables.getQueues().getDeadNotificationQueue(), true);
     }
     @Bean
     public DirectExchange notificationExchange(){
-        return new DirectExchange(notificationExchange);
+        return new DirectExchange(rabbitConfigVariables.getExchanges().getNotificationExchange());
     }
 
     @Bean
     public Binding notificationBind(Queue linkCreationQ,
                                     DirectExchange notificationExchange){
         return BindingBuilder.bind(linkCreationQ).to(notificationExchange)
-                .with(notificationRout + "." + linkCreationQ.getName());
+                .with(rabbitConfigVariables.getPaths().getNotification() + "." + linkCreationQ.getName());
     }
 
     @Bean
     public Binding deadBind(Queue deadNotificationQ,
                             DirectExchange notificationExchange){
         return BindingBuilder.bind(deadNotificationQ).to(notificationExchange)
-                .with(notificationRout + "." + deadNotificationQ.getName());
+                .with(rabbitConfigVariables.getPaths().getNotification() + "." + deadNotificationQ.getName());
     }
     @Bean
     public Binding expiredBind(Queue expiredLinkQ,
                             DirectExchange  notificationExchange){
         return BindingBuilder.bind(expiredLinkQ).to(notificationExchange)
-                .with(notificationRout + "." + expiredLinkQ.getName());
+                .with(rabbitConfigVariables.getPaths().getNotification() + "." + expiredLinkQ.getName());
     }
 }

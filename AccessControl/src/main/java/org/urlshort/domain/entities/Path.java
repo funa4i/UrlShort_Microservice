@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Table
 public class Path {
 
     @Id
@@ -25,10 +25,10 @@ public class Path {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "paths",fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "path_role",
+            joinColumns = @JoinColumn(name = "path_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
-
-    public Path(String path){
-        name = path;
-    }
 }
