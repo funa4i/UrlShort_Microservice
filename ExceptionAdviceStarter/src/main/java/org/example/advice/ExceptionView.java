@@ -1,12 +1,14 @@
 package org.example.advice;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.advice.enums.ExceptionAnswer;
 
 import java.time.LocalDateTime;
 
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExceptionView {
@@ -14,26 +16,8 @@ public class ExceptionView {
     private LocalDateTime timestamp;
     private String message;
 
-    public ExceptionView(ExceptionAnswer exception, String message) {
-        this.exception = exception;
-        this.timestamp = LocalDateTime.now();
-        this.message = message;
-    }
-
     public ExceptionView(ExceptionAnswer exception) {
         this.exception = exception;
         this.timestamp = LocalDateTime.now();
-    }
-
-    public void setException(ExceptionAnswer exception) {
-        this.exception = exception;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp){
-        this.timestamp = timestamp;
-    }
-
-    public void setMessage(String message){
-        this.message = message;
     }
 }
