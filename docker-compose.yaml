@@ -49,6 +49,12 @@ services:
     restart: unless-stopped
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+  gateway:
+    depends_on:
+      - postgres
+    build:
+      context: ./Gateway
+    network_mode: host
 
 volumes:
   urlShortener-data:
