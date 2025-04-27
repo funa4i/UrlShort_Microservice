@@ -17,6 +17,7 @@
       <module>UserApplication</module>
     <module>UrlShortService</module>
     <module>NotificationService</module>
+      <module>DiscoveryService</module>
   </modules>
 
   <properties>
@@ -39,6 +40,12 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>2.3.0</version>
     </dependency>
 
     <dependency>
