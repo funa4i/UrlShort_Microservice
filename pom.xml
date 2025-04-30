@@ -18,6 +18,7 @@
     <module>UrlShortService</module>
     <module>NotificationService</module>
       <module>DiscoveryService</module>
+      <module>DiscoveryServ</module>
   </modules>
 
   <properties>
