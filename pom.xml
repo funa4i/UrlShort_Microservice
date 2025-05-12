@@ -14,14 +14,15 @@
     <module>Authentication</module>
     <module>EurekaServer</module>
     <module>Gateway</module>
-      <module>UserApplication</module>
+    <module>UserApplication</module>
     <module>UrlShortService</module>
     <module>NotificationService</module>
-      <module>DiscoveryService</module>
-      <module>DiscoveryServ</module>
+    <module>DiscoveryService</module>
+    <module>TelegramBotService</module>
   </modules>
 
   <properties>
+    <java.source>23</java.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <org.postgesql.version>42.7.3</org.postgesql.version>
     <org.flywaydb.version>10.18.0</org.flywaydb.version>

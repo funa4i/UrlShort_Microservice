@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "password"
-      POSTGRES_MULTIPLE_DATABASES: "url,userAuth,userData,permissions"
+      POSTGRES_MULTIPLE_DATABASES: "url,userAuth,userData,permissions,telegram"
       PGDATA: "/var/lib/postgresqlm/data/pgdata"
     volumes:
       - ./init-scripts:/docker-entrypoint-initdb.d
@@ -49,12 +49,6 @@ services:
     restart: unless-stopped
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-  gateway:
-    depends_on:
-      - postgres
-    build:
-      context: ./Gateway
-    network_mode: host
 
 volumes:
   urlShortener-data:
